@@ -25,25 +25,6 @@ Python Flask-based machine learning service for predicting Schwann cell viabilit
 - **GET /predict/health** - Health check
   - Response: `{ status, message }`
 
-### Example Request:
-```json
-{
-  "pc_mxene_loading": 1.5,
-  "laminin_peptide_loading": 2.3,
-  "stimulation_frequency": 0.8,
-  "applied_voltage": 4.1
-}
-```
-
-### Example Response:
-```json
-{
-  "prediction": 85.67,
-  "unit": "%",
-  "user": "testuser"
-}
-```
-
 ## 📋 Prerequisites
 
 - Python 3.11+
@@ -80,10 +61,6 @@ MODEL_DIR=ml_model
 ```bash
 # Development server
 python run.py
-
-# Production server with Gunicorn
-gunicorn --bind 0.0.0.0:5000 run:app
-```
 
 The service will be available at `http://localhost:5000`
 
@@ -125,7 +102,6 @@ Content-Type: application/json
   "stimulation_frequency": 0.8,
   "applied_voltage": 4.1,
   "model_path": "/path/to/model.keras"
-}
 }
 ```
 
@@ -198,28 +174,29 @@ curl -X POST http://localhost:5000/predict/model \
 predict-service/
 ├── app/
 │   ├── __init__.py         # Flask app factory
-│   ├── config/             # Configuration settings
-|       ├── env.py          # Evironment configuration
-│       └── swagger.py      # Swagger configuration
+│   ├── __pycache__/        # Python cache files
+│   ├── config/
+│   │   ├── env.py          # Environment configuration
+│   │   ├── swagger.py      # Swagger configuration
+│   │   └── __pycache__/    # Python cache files
 │   ├── middlewares/
-│   │   └── auth.py         # JWT authentication middleware
+│   │   ├── auth.py         # JWT authentication middleware
+│   │   └── __pycache__/    # Python cache files
 │   ├── models/
-│   │   └── ann.py          # ANN model class
+│   │   ├── dynamic_loader.py # Dynamic model loader utility
+│   │   └── __pycache__/    # Python cache files
 │   ├── routes/
-│   │   └── predict.py      # Prediction routes
+│   │   ├── predict.py      # Prediction routes
+│   │   └── __pycache__/    # Python cache files
 │   └── scalers/
-│       └── ann_scaler.py   # Data scaler utility
-├── config/
-│   └── env.py              # Environment configuration
+│       ├── shared_scaler.py # Shared scaler utility
+│       └── __pycache__/    # Python cache files
 ├── ml_model/
-│   ├── ann_model.keras     # Trained Keras model
-│   ├── ann_model_info.json # Model metadata
-│   └── ann_scaler.pkl      # Trained scaler
-├── requirements.txt
-├── run.py                  # Application entry point
-├── dockerfile
-├── .dockerignore
-└── README.md
+│   └── scaler.pkl          # Trained data scaler
+├── dockerfile              # Docker configuration
+├── README.md              # This file
+├── requirements.txt       # Python dependencies
+└── run.py                 # Application entry point
 ```
 
 ## 🔧 Configuration

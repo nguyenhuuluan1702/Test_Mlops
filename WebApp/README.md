@@ -1,61 +1,355 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# WebApp - Laravel MVC Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel-based web application for Schwann Cell Viability Prediction System with user authentication, machine learning model management, and prediction functionality.
 
-## About Laravel
+## 🚀 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **User Authentication & Authorization** with role-based access control
+- **Admin Panel** for user and ML model management
+- **Machine Learning Integration** with external prediction service
+- **Responsive UI** using Bootstrap and AdminLTE theme
+- **File Upload & Management** for ML model files
+- **Prediction History** with detailed analytics
+- **Session Management** with secure authentication
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📋 Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### System Requirements
+- **PHP 8.4+** with required extensions
+- **Composer** (PHP dependency manager)
+- **Node.js & npm** (for frontend asset compilation)
+- **Database** (MySQL/PostgreSQL/SQLite)
 
-## Learning Laravel
+### Quick Installation Commands
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Windows:**
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://php.new/install/windows/8.4'))
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**Linux:**
+```bash
+/bin/bash -c "$(curl -fsSL https://php.new/install/linux/8.4)"
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**macOS:**
+```bash
+/bin/bash -c "$(curl -fsSL https://php.new/install/mac/8.4)"
+```
 
-## Laravel Sponsors
+## 🛠️ Local Development
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Install Dependencies
 
-### Premium Partners
+```bash
+# Install PHP dependencies
+composer install
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Install Node.js dependencies
+npm install
+```
 
-## Contributing
+### 2. Environment Configuration
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# Copy environment file
+cp .env.example .env
 
-## Code of Conduct
+# Generate application key
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Database Setup
 
-## Security Vulnerabilities
+```bash
+# Run migrations (select 'yes' if database doesn't exist)
+php artisan migrate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Seed the database with initial data
+php artisan db:seed
+```
 
-## License
+### 4. Build Frontend Assets
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+# Build assets for production
+npm run build
+```
+
+### 5. Start Development Server
+
+```bash
+# Start Laravel development server
+php artisan serve
+```
+
+The application will be available at `http://localhost:8000`
+
+## 🔄 Development Reload Commands
+
+When making changes during development, use these commands to refresh the application:
+
+```bash
+# Rebuild frontend assets
+npm run build
+
+# Clear application cache
+php artisan cache:clear
+
+# Clear compiled views
+php artisan view:clear
+```
+
+## 🏗️ Project Structure
+
+```
+WebApp/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/         # Request controllers
+│   │   └── Middleware/          # Custom middleware
+│   ├── Models/                  # Eloquent models
+│   │   ├── MLModel.php         # ML Model management
+│   │   ├── Prediction.php      # Prediction records
+│   │   ├── Role.php            # User roles
+│   │   └── User.php            # User management
+│   ├── Providers/              # Service providers
+│   └── Services/               # Business logic services
+│       ├── PredictionService.php # ML prediction service
+│       └── UserService.php     # User management service
+├── bootstrap/
+│   ├── app.php                 # Application bootstrap
+│   ├── providers.php           # Provider registration
+│   └── cache/                  # Bootstrap cache
+├── config/                     # Configuration files
+│   ├── app.php                 # Application configuration
+│   ├── auth.php                # Authentication configuration
+│   ├── database.php            # Database configuration
+│   └── ...                     # Other config files
+├── database/
+│   ├── factories/              # Model factories
+│   ├── migrations/             # Database migrations
+│   └── seeders/                # Database seeders
+├── public/                     # Web accessible files
+│   ├── index.php               # Application entry point
+│   ├── build/                  # Compiled assets
+│   ├── css/                    # CSS files
+│   ├── images/                 # Image assets
+│   ├── js/                     # JavaScript files
+│   └── models/                 # Uploaded model files
+├── resources/
+│   ├── css/                    # Source CSS files
+│   ├── js/                     # Source JavaScript files
+│   └── views/                  # Blade templates
+│       ├── admin/              # Admin panel views
+│       ├── auth/               # Authentication views
+│       ├── components/         # Blade components
+│       ├── layouts/            # Layout templates
+│       └── user/               # User dashboard views
+├── routes/
+│   ├── console.php             # Artisan commands
+│   ├── test.php                # Test routes
+│   └── web.php                 # Web routes
+├── storage/
+│   ├── app/                    # Application storage
+│   ├── framework/              # Framework storage
+│   └── logs/                   # Application logs
+├── tests/                      # Test files
+├── vendor/                     # Composer dependencies
+├── artisan                     # Artisan CLI tool
+├── composer.json               # Composer configuration
+├── package.json                # npm configuration
+├── phpunit.xml                 # PHPUnit configuration
+└── vite.config.js              # Vite build configuration
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Key variables in `.env` file:
+
+```env
+# Application
+APP_NAME="Schwann Cell Viability Predictor"
+APP_ENV=local
+APP_KEY=base64:...
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+# Database
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=schwann_cell_db
+DB_USERNAME=root
+DB_PASSWORD=
+
+# External Services
+PREDICT_SERVICE_URL=http://localhost:5000
+AUTH_SERVICE_URL=http://localhost:4000
+
+# Mail Configuration (optional)
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+```
+
+### Key Dependencies
+
+**Backend (PHP):**
+- **Laravel 11.x**: PHP web framework
+- **Laravel UI**: Authentication scaffolding
+- **Guzzle**: HTTP client for API calls
+
+**Frontend:**
+- **Bootstrap 5**: CSS framework
+- **AdminLTE**: Admin dashboard theme
+- **Font Awesome**: Icon library
+- **Chart.js**: Data visualization
+
+## 🎯 User Roles & Permissions
+
+### Administrator
+- Full system access
+- User management (CRUD operations)
+- ML model management
+- System configuration
+- View all predictions
+
+### Regular User
+- Personal dashboard access
+- Create predictions
+- View own prediction history
+- Profile management
+
+## 🧪 Testing
+
+### Running Tests
+
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test suite
+php artisan test --testsuite=Feature
+
+# Run with coverage
+php artisan test --coverage
+```
+
+### Test Structure
+- **Feature Tests**: End-to-end functionality testing
+- **Unit Tests**: Individual component testing
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+1. **Permission Errors**
+   ```bash
+   # Fix storage permissions
+   chmod -R 755 storage/
+   chmod -R 755 bootstrap/cache/
+   ```
+
+2. **Database Connection Issues**
+   ```bash
+   # Test database connection
+   php artisan tinker
+   >>> DB::connection()->getPdo();
+   ```
+
+3. **Asset Compilation Issues**
+   ```bash
+   # Clear npm cache
+   npm cache clean --force
+   
+   # Reinstall dependencies
+   rm -rf node_modules package-lock.json
+   npm install
+   ```
+
+4. **Cache Issues**
+   ```bash
+   # Clear all caches
+   php artisan cache:clear
+   php artisan config:clear
+   php artisan route:clear
+   php artisan view:clear
+   ```
+
+5. **File Upload Issues**
+   ```bash
+   # Check storage link
+   php artisan storage:link
+   
+   # Verify upload directory permissions
+   ls -la public/models/
+   ```
+
+## 📊 Database Schema
+
+### Key Tables
+- **users**: User accounts and profiles
+- **roles**: User role definitions
+- **ml_models**: Machine learning model metadata
+- **predictions**: Prediction records and results
+- **sessions**: User session management
+
+## 🔍 API Integration
+
+The Laravel application integrates with external services:
+
+- **Predict Service** (`http://localhost:5000`): ML prediction processing
+- **Auth Service** (`http://localhost:4000`): JWT token management
+
+### Service Communication
+- RESTful API calls using Guzzle HTTP client
+- JWT token-based authentication
+- Error handling and retry logic
+
+## 📈 Performance Optimization
+
+### Production Optimizations
+
+```bash
+# Optimize autoloader
+composer install --optimize-autoloader --no-dev
+
+# Cache configuration
+php artisan config:cache
+
+# Cache routes
+php artisan route:cache
+
+# Cache views
+php artisan view:cache
+
+# Build optimized assets
+npm run build
+```
+
+### Database Optimizations
+- Proper indexing on frequently queried columns
+- Eager loading for related models
+- Query result caching for expensive operations
+
+## 🔐 Security Features
+
+- **CSRF Protection**: Cross-site request forgery protection
+- **XSS Prevention**: Output escaping and validation
+- **SQL Injection Prevention**: Eloquent ORM with prepared statements
+- **File Upload Security**: Type validation and secure storage
+- **Session Security**: Secure session handling
+- **Password Hashing**: Bcrypt password hashing
+
+## 📱 Responsive Design
+
+The application features a fully responsive design that works across:
+- Desktop computers
+- Tablets
+- Mobile phones
+
+Built with Bootstrap 5 and custom CSS for optimal user experience on all devices.
+
