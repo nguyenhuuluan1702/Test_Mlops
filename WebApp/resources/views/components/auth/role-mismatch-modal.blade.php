@@ -1,0 +1,39 @@
+{{-- Component: Role Mismatch Logout Modal --}}
+@props(['requiredRole' => 'admin'])
+
+<div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="logoutConfirmModalLabel">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    Confirm Logout
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="bi bi-box-arrow-right text-danger" style="font-size: 3rem;"></i>
+                    <h5 class="mt-3 mb-3">Switch Account Role?</h5>
+                    <p class="text-muted">
+                        You will be logged out and redirected to the login page where you can 
+                        sign in with an account that has <strong>{{ strtoupper($requiredRole) }}</strong> privileges.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>
+                    Cancel
+                </button>
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-box-arrow-right me-1"></i>
+                        Yes, Logout Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
