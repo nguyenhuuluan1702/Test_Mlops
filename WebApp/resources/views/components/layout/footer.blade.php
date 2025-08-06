@@ -1,5 +1,5 @@
 {{-- Component: Layout Footer --}}
-@props(['year' => null, 'company' => 'Schwann Cell Viability Prediction'])
+@props(['year' => null, 'company' => 'Schwann Cell Viability Prediction System'])
 
 <footer class="main-footer">
     <strong>Copyright &copy; {{ $year ?? date('Y') }} {{ $company }}.</strong>

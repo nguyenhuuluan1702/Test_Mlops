@@ -36,7 +36,7 @@
     @endif
     
     <div class="d-flex align-items-start">
-        <i class="{{ $iconClass }} flex-shrink-0 me-2" style="margin-top: 2px;"></i>
+        <i class="{{ $iconClass }} flex-shrink-0 me-2 icon-aligned"></i>
         <div class="flex-grow-1">
             {{ $slot }}
         </div>

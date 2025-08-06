@@ -10,6 +10,63 @@ $(document).ready(function() {
     // Ensure dropdown menus work properly
     $('.dropdown-toggle').dropdown();
     
+    // Fix logout modal for sidebar
+    $('.logout-link').on('click', function(e) {
+        e.preventDefault();
+        
+        // Force close any existing modals first
+        $('.modal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        
+        // Small delay then show the logout modal
+        setTimeout(function() {
+            // Try Bootstrap 5 first, then Bootstrap 4
+            if (typeof bootstrap !== 'undefined') {
+                // Bootstrap 5
+                const modal = new bootstrap.Modal(document.getElementById('logoutModal'));
+                modal.show();
+            } else if (typeof $.fn.modal !== 'undefined') {
+                // Bootstrap 4 (jQuery)
+                $('#logoutModal').modal('show');
+            } else {
+                // Fallback - direct confirmation
+                if (confirm('Are you sure you want to logout?')) {
+                    // Find logout form and submit it
+                    const logoutForm = document.querySelector('form[action*="logout"]');
+                    if (logoutForm) {
+                        logoutForm.submit();
+                    }
+                }
+            }
+        }, 150);
+    });
+    
+    // Handle modal cleanup when closed
+    $('#logoutModal').on('hidden.bs.modal hidden', function (e) {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        $('body').css('padding-right', '');
+    });
+    
+    // Additional cleanup for backdrop clicks
+    $(document).on('click', '.modal-backdrop', function() {
+        $('.modal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        $('body').css('padding-right', '');
+    });
+    
+    // Force cleanup on escape key
+    $(document).on('keyup', function(e) {
+        if (e.key === 'Escape') {
+            $('.modal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+            $('body').css('padding-right', '');
+        }
+    });
+    
     // Global AJAX error handler for role mismatch
     $(document).ajaxError(function(event, xhr, settings, thrownError) {
         if (xhr.status === 403 && xhr.responseJSON && xhr.responseJSON.role_mismatch) {

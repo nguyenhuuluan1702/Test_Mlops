@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Schwann Cell Viability Prediction')</title>
+    <title>@yield('title', 'Schwann Cell Viability Prediction System')</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('images/ml.ico') }}">
     
     {{-- External CSS --}}
@@ -13,7 +13,14 @@
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/adminlte.min.css') }}">
     
+    {{-- DataTables CSS --}}
+    <link rel="stylesheet" href="{{ asset('plugins/datatables/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables/css/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables/css/responsive.bootstrap4.min.css') }}">
+    
     {{-- Custom CSS --}}
+    <link rel="stylesheet" href="{{ asset('css/common-components.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/utilities.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app-layout.css') }}">
     
     @yield('styles')
@@ -23,8 +30,10 @@
         {{-- Header Component --}}
         <x-layout.header />
 
-        {{-- Sidebar Component --}}
-        <x-layout.sidebar />
+        {{-- Sidebar Component - Dynamic based on user role --}}
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            @yield('sidebar')
+        </aside>
 
         {{-- Content Wrapper Component --}}
         <x-layout.content />
@@ -40,6 +49,20 @@
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/adminlte/js/adminlte.min.js') }}"></script>
+    
+    {{-- DataTables JavaScript --}}
+    <script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
     
     {{-- Custom JavaScript with global variables --}}
     <script>

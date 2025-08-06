@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                                            <table id="users" class="table table-bordered table-striped">
+                    <table id="users" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>User Code</th>
@@ -38,7 +38,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                    <tbody>
+                        <tbody>
                         @foreach($users as $user)
                         @php
                             $predictionCount = $user->predictions()->count();
@@ -56,26 +56,17 @@
                             </td>
                             <td>
                                 <div class="d-flex flex-wrap gap-1">
-                                    <x-ui.action-buttons :actions="[
-                                        [
-                                            'type' => 'link',
-                                            'url' => route('admin.users.edit', $user),
-                                            'color' => 'info',
-                                            'icon' => 'fas fa-edit',
-                                            'text' => 'Edit',
-                                            'tooltip' => 'Edit user'
-                                        ],
-                                        [
-                                            'type' => 'form',
-                                            'method' => 'POST',
-                                            'url' => route('admin.users.reset-password', $user),
-                                            'color' => 'warning',
-                                            'icon' => 'fas fa-key',
-                                            'text' => 'Reset',
-                                            'confirm' => 'Reset password for this user?',
-                                            'tooltip' => 'Reset password'
-                                        ]
-                                    ]" />
+                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    
+                                    <form method="POST" action="{{ route('admin.users.reset-password', $user) }}" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-warning" 
+                                                onclick="return confirm('Reset password for this user?')">
+                                            <i class="fas fa-key"></i> Reset
+                                        </button>
+                                    </form>
                                     
                                     <button type="button" class="btn btn-sm {{ $predictionCount > 0 ? 'btn-warning' : 'btn-danger' }}" 
                                             data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">
@@ -206,18 +197,12 @@
 @endforeach
 @endsection
 
-@push('styles')
+@section('styles')
 <link rel="stylesheet" href="{{ asset('css/admin-user-management.css') }}">
-@endpush
+<link rel="stylesheet" href="{{ asset('css/admin-tables.css') }}">
+@endsection
 
-@push('scripts')
+@section('scripts')
+<script src="{{ asset('js/admin-users-table.js') }}"></script>
 <script src="{{ asset('js/admin-panel.js') }}"></script>
-<script>
-$(document).ready(function() {
-    // Initialize admin panel
-    if (typeof AdminPanel !== 'undefined') {
-        window.adminPanel = new AdminPanel('users');
-    }
-});
-</script>
-@endpush
+@endsection

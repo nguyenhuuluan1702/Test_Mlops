@@ -79,10 +79,9 @@
                                         {{ $predictionCount }}
                                     </span>
                                 </td>
-                                <td>{{ $model->created_at->format('Y-m-d H:i') }}</td>
                                 <td>
-                                    <div class="action-buttons">
-                                        <a href="{{ route('admin.models.edit', $model) }}" class="btn btn-sm btn-info me-2">
+                                    <div class="d-flex flex-wrap gap-1">
+                                        <a href="{{ route('admin.models.edit', $model) }}" class="btn btn-sm btn-info">
                                             <i class="bi bi-pencil"></i> Edit
                                         </a>
                                         
@@ -104,117 +103,6 @@
                                                 Delete {{ $predictionCount > 0 ? "({$predictionCount})" : '' }}
                                             </button>
                                         @endif
-                                        
-                                        <!-- Delete Modal (only for non-default models) -->
-                                        @if(!$isDefault)
-                                        <div class="modal fade" id="deleteModal{{ $model->id }}" tabindex="-1" 
-                                             aria-labelledby="deleteModalLabel{{ $model->id }}" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header {{ $predictionCount > 0 ? 'bg-warning' : 'bg-danger' }} text-white">
-                                                        <h5 class="modal-title" id="deleteModalLabel{{ $model->id }}">
-                                                            <i class="bi bi-exclamation-triangle"></i>
-                                                            Delete Model: <span class="text-wrap">{{ $model->MLMName }}</span>
-                                                        </h5>
-                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        @if($predictionCount > 0)
-                                                            <div class="alert alert-warning">
-                                                                <i class="bi bi-exclamation-triangle"></i>
-                                                                <strong>Warning!</strong> This model has <strong>{{ $predictionCount }}</strong> associated prediction(s).
-                                                            </div>
-                                                            
-                                                            <p>Choose how you want to proceed:</p>
-                                                            
-                                                            <div class="row g-2">
-                                                                <div class="col-12 col-md-4">
-                                                                    <div class="card border-secondary h-100">
-                                                                        <div class="card-body text-center d-flex flex-column">
-                                                                            <h6 class="card-title text-secondary">
-                                                                                <i class="bi bi-shield-check"></i> Safe Option
-                                                                            </h6>
-                                                                            <p class="card-text small flex-grow-1">Cancel deletion.</p>
-                                                                            <button type="button" class="btn btn-secondary btn-sm mt-auto" data-bs-dismiss="modal">
-                                                                                <i class="bi bi-arrow-left"></i> Cancel
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12 col-md-4">
-                                                                    <div class="card border-warning h-100">
-                                                                        <div class="card-body text-center d-flex flex-column">
-                                                                            <h6 class="card-title text-warning">
-                                                                                <i class="bi bi-pause-circle"></i> Deactivate
-                                                                            </h6>
-                                                                            <p class="card-text small flex-grow-1">Keep model but make it inactive.</p>
-                                                                            <form method="POST" action="{{ route('admin.models.update', $model) }}" class="d-inline mt-auto">
-                                                                                @csrf
-                                                                                @method('PUT')
-                                                                                <input type="hidden" name="MLMName" value="{{ $model->MLMName }}">
-                                                                                <input type="hidden" name="LibType" value="{{ $model->LibType }}">
-                                                                                <!-- Don't include IsActive checkbox to make it false -->
-                                                                                <button type="submit" class="btn btn-warning btn-sm">
-                                                                                    <i class="bi bi-pause"></i> Deactivate
-                                                                                </button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12 col-md-4">
-                                                                    <div class="card border-danger h-100">
-                                                                        <div class="card-body text-center d-flex flex-column">
-                                                                            <h6 class="card-title text-danger">
-                                                                                <i class="bi bi-exclamation-triangle"></i> Force Delete
-                                                                            </h6>
-                                                                            <p class="card-text small flex-grow-1">Delete model AND all {{ $predictionCount }} prediction(s).</p>
-                                                                            <form method="POST" action="{{ route('admin.models.force-delete', $model) }}" class="d-inline mt-auto">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit" class="btn btn-danger btn-sm" 
-                                                                                        onclick="return confirm('⚠️ FINAL WARNING: This will permanently delete the model and ALL {{ $predictionCount }} predictions. This cannot be undone! Are you absolutely sure?')">
-                                                                                    <i class="bi bi-trash"></i> Force Delete
-                                                                                </button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="mt-3">
-                                                                <small class="text-muted">
-                                                                    <i class="bi bi-info-circle"></i>
-                                                                    <strong>Alternative:</strong> You can also deactivate this model instead of deleting it by editing the model and unchecking "Active" status.
-                                                                </small>
-                                                            </div>
-                                                        @else
-                                                            <div class="alert alert-info">
-                                                                <i class="bi bi-info-circle"></i>
-                                                                This model has no associated predictions. It's safe to delete.
-                                                            </div>
-                                                            
-                                                            <p>Are you sure you want to delete the model <strong>"{{ $model->MLMName }}"</strong>?</p>
-                                                            <p class="text-muted small">This action will permanently remove the model file and database entry.</p>
-                                                        @endif
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                            <i class="bi bi-x"></i> Cancel
-                                                        </button>
-                                                        @if($predictionCount == 0)
-                                                            <form method="POST" action="{{ route('admin.models.delete', $model) }}" class="d-inline">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger">
-                                                                    <i class="bi bi-trash"></i> Delete Model
-                                                                </button>
-                                                            </form>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -231,20 +119,144 @@
         </div>
     </div>
 </div>
+
+<!-- Delete Modals -->
+@foreach($models as $model)
+    @php
+        $predictionCount = $model->predictions()->count();
+        $isDefault = $model->MLMName === 'Default ANN Model' || 
+                   str_contains($model->FilePath, 'ann_model.keras') || 
+                   $model->id === 1;
+    @endphp
+    
+    @if(!$isDefault)
+    <div class="modal fade" id="deleteModal{{ $model->id }}" tabindex="-1" 
+         aria-labelledby="deleteModalLabel{{ $model->id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header {{ $predictionCount > 0 ? 'bg-warning' : 'bg-danger' }} text-white">
+                    <h5 class="modal-title" id="deleteModalLabel{{ $model->id }}">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        Delete Model: <span class="text-wrap">{{ $model->MLMName }}</span>
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @if($predictionCount > 0)
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <strong>Warning!</strong> This model has <strong>{{ $predictionCount }}</strong> associated prediction(s).
+                        </div>
+                        
+                        <p>Choose how you want to proceed:</p>
+                        
+                        <div class="row g-2">
+                            <div class="col-12 col-md-4">
+                                <div class="card border-secondary h-100">
+                                    <div class="card-body text-center d-flex flex-column">
+                                        <h6 class="card-title text-secondary">
+                                            <i class="bi bi-shield-check"></i> Safe Option
+                                        </h6>
+                                        <p class="card-text small flex-grow-1">Cancel deletion.</p>
+                                        <button type="button" class="btn btn-secondary btn-sm mt-auto" data-bs-dismiss="modal">
+                                            <i class="bi bi-arrow-left"></i> Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card border-warning h-100">
+                                    <div class="card-body text-center d-flex flex-column">
+                                        <h6 class="card-title text-warning">
+                                            <i class="bi bi-pause-circle"></i> Deactivate
+                                        </h6>
+                                        <p class="card-text small flex-grow-1">Keep model but make it inactive.</p>
+                                        <form method="POST" action="{{ route('admin.models.update', $model) }}" class="d-inline mt-auto">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="MLMName" value="{{ $model->MLMName }}">
+                                            <input type="hidden" name="LibType" value="{{ $model->LibType }}">
+                                            <!-- Don't include IsActive checkbox to make it false -->
+                                            <button type="submit" class="btn btn-warning btn-sm">
+                                                <i class="bi bi-pause"></i> Deactivate
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card border-danger h-100">
+                                    <div class="card-body text-center d-flex flex-column">
+                                        <h6 class="card-title text-danger">
+                                            <i class="bi bi-exclamation-triangle"></i> Force Delete
+                                        </h6>
+                                        <p class="card-text small flex-grow-1">Delete model AND all {{ $predictionCount }} prediction(s).</p>
+                                        <form method="POST" action="{{ route('admin.models.force-delete', $model) }}" class="d-inline mt-auto">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" 
+                                                    onclick="return confirm('⚠️ FINAL WARNING: This will permanently delete the model and ALL {{ $predictionCount }} predictions. This cannot be undone! Are you absolutely sure?')">
+                                                <i class="bi bi-trash"></i> Force Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <small class="text-muted">
+                                <i class="bi bi-info-circle"></i>
+                                <strong>Alternative:</strong> You can also deactivate this model instead of deleting it by editing the model and unchecking "Active" status.
+                            </small>
+                        </div>
+                    @else
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i>
+                            This model has no associated predictions. It's safe to delete.
+                        </div>
+                        
+                        <p>Are you sure you want to delete the model <strong>"{{ $model->MLMName }}"</strong>?</p>
+                        <p class="text-muted small">This action will permanently remove the model file and database entry.</p>
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x"></i> Cancel
+                    </button>
+                    @if($predictionCount == 0)
+                        <form method="POST" action="{{ route('admin.models.delete', $model) }}" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Delete Model
+                            </button>
+                        </form>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+@endforeach
 @endsection
 
-@push('styles')
+@section('styles')
 <link rel="stylesheet" href="{{ asset('css/admin-tables.css') }}">
-@endpush
+@endsection
 
-@push('scripts')
+@section('scripts')
+<script src="{{ asset('js/admin-models-table.js') }}"></script>
 <script src="{{ asset('js/admin-panel.js') }}"></script>
 <script>
-// Initialize admin panel
+// Initialize admin panel after DataTable
 $(document).ready(function() {
-    if (typeof AdminPanel !== 'undefined') {
-        window.adminPanel = new AdminPanel('models');
-    }
+    // Wait for DataTable initialization
+    setTimeout(function() {
+        if (typeof AdminPanel !== 'undefined') {
+            window.adminPanel = new AdminPanel('models');
+        }
+    }, 100);
 });
 </script>
-@endpush
+@endsection

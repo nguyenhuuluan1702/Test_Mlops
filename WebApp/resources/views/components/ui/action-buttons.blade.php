@@ -28,7 +28,7 @@
                     <i class="{{ $action['icon'] }}"></i>
                 @endif
                 @if(isset($action['text']))
-                    @if(isset($action['icon'])) @endif{{ $action['text'] }}
+                    {{ isset($action['icon']) ? ' ' : '' }}{{ $action['text'] }}
                 @endif
             </a>
         @elseif($action['type'] === 'button')
@@ -44,9 +44,8 @@
                     <i class="{{ $action['icon'] }}"></i>
                 @endif
                 @if(isset($action['text']))
-                    @if(isset($action['icon'])) @endif{{ $action['text'] }}
+                    {{ isset($action['icon']) ? ' ' : '' }}{{ $action['text'] }}
                 @endif
-            </button>
             </button>
         @elseif($action['type'] === 'form')
             <form method="{{ $action['method'] ?? 'POST' }}" 
@@ -69,7 +68,7 @@
                         <i class="{{ $action['icon'] }}"></i>
                     @endif
                     @if(isset($action['text']))
-                        @if(isset($action['icon'])) @endif{{ $action['text'] }}
+                        {{ isset($action['icon']) ? ' ' : '' }}{{ $action['text'] }}
                     @endif
                 </button>
             </form>

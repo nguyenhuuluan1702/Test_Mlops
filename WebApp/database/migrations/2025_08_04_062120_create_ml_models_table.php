@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ml_models', function (Blueprint $table) {
             $table->id();
-            $table->string('MLMName', 20);
+            $table->string('MLMName', 20)->unique();
             $table->string('FilePath', 255);
             $table->string('LibType', 20);
             $table->boolean('IsActive')->default(true);

@@ -15,6 +15,11 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+// Search route for error pages
+Route::get('/search', function () {
+    return redirect()->route('login')->with('message', 'Please login to use search functionality.');
+})->name('search');
+
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

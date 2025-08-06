@@ -72,7 +72,7 @@
                     </div>
                 @else
                     <div class="text-center py-4">
-                        <i class="bi bi-clock-history" style="font-size: 4rem; color: #ccc;"></i>
+                        <i class="bi bi-clock-history icon-64 text-muted-light"></i>
                         <h4 class="mt-3">No Admin Predictions Yet</h4>
                         <p class="text-muted">You haven't made any predictions as admin yet. Start by making your first admin prediction!</p>
                         <a href="{{ route('admin.predict') }}" class="btn btn-primary">
@@ -178,5 +178,5 @@
 @endsection
 
 @section('scripts')
-<!-- Basic admin scripts can be added here -->
+<script src="{{ asset('js/admin-history-table.js') }}"></script>
 @endsection

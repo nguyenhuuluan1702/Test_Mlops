@@ -61,7 +61,7 @@
                     </div>
                 @else
                     <div class="text-center py-4">
-                        <i class="bi bi-clock-history" style="font-size: 4rem; color: #ccc;"></i>
+                        <i class="bi bi-clock-history icon-64 text-muted-light"></i>
                         <h4 class="mt-3">No Predictions Yet</h4>
                         <p class="text-muted">You haven't made any predictions yet. Start by making your first prediction!</p>
                         <a href="{{ route('user.predict') }}" class="btn btn-primary">
@@ -128,7 +128,9 @@
 @endsection
 
 @section('styles')
+<link rel="stylesheet" href="{{ asset('css/admin-tables.css') }}">
 @endsection
 
 @section('scripts')
+<script src="{{ asset('js/user-history-table.js') }}"></script>
 @endsection

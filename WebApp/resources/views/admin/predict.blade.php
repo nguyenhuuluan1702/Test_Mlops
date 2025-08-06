@@ -80,7 +80,7 @@
                                     </small>
                                 </div>
                                 <div class="text-end">
-                                    <i class="bi bi-check-circle-fill text-success" style="font-size: 1.5rem;"></i>
+                                    <i class="bi bi-check-circle-fill text-success icon-24"></i>
                                 </div>
                             </div>
                         </div>
@@ -264,11 +264,12 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('js/prediction-form-config.js') }}"></script>
 <script src="{{ asset('js/prediction-form.js') }}"></script>
 <script src="{{ asset('js/admin-prediction.js') }}"></script>
 <script>
-// Initialize admin prediction form with config
-window.initAdminPredictionForm({
+// Register admin prediction form configuration
+window.PredictionFormConfig.register('admin-predict', {
     submitUrl: '{{ route('admin.predict.make') }}',
     csrfToken: '{{ csrf_token() }}',
     userType: 'admin'

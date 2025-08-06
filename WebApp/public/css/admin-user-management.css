@@ -1,24 +1,7 @@
 /* Admin User Management Styles */
 
-/* Action Buttons */
-.action-buttons .btn {
-    margin-right: 5px;
-    margin-bottom: 2px;
-}
-
-.action-buttons {
-    white-space: nowrap;
-}
-
-/* Table Styles */
-.table td {
-    vertical-align: middle;
-    white-space: nowrap;
-}
-
-.table td .d-flex {
-    flex-wrap: nowrap !important;
-}
+/* Note: Action button styles moved to common-components.css */
+/* Note: Table styles moved to common-components.css */
 
 /* Card Styles with Hover Effects */
 .card.border-secondary, 

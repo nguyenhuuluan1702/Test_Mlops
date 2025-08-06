@@ -36,7 +36,7 @@
         <x-ui.card title="Recent Predictions">
             @if($recentPredictions->count() > 0)
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
+                    <table id="recent-predictions" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -65,7 +65,7 @@
                 </div>
             @else
                 <div class="text-center py-4">
-                    <i class="fas fa-inbox text-muted" style="font-size: 3rem;"></i>
+                    <i class="fas fa-inbox text-muted icon-48"></i>
                     <h5 class="text-muted mt-2">No predictions yet</h5>
                     <p class="text-muted">Start by making your first prediction</p>
                     <a href="{{ route('user.predict') }}" class="btn btn-primary">
@@ -92,4 +92,12 @@
         </x-ui.card>
     </div>
 </div>
+@endsection
+
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/admin-tables.css') }}">
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/user-dashboard-table.js') }}"></script>
 @endsection

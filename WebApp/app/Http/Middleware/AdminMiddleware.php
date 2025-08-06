@@ -32,7 +32,8 @@ class AdminMiddleware
                 ], 403);
             }
             
-            return response()->view('errors.role-mismatch', [
+            return response()->view('errors.403', [
+                'role_mismatch' => true,
                 'current_role' => Auth::user()->role->RoleCode,
                 'required_role' => 'admin',
                 'user_name' => Auth::user()->FullName

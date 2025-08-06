@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - Schwann Cell Viability Prediction</title>
+    <title>Login - Schwann Cell Viability Prediction System</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('images/ml.ico') }}">
     
     <!-- Bootstrap CSS -->
@@ -38,11 +38,9 @@
                     <div class="w-100 login-form-container">
                         <div class="card login-card">
                             <div class="card-header login-card-header text-center">
-                                <h4 class="mb-2">
-                                    <i class="fas fa-microchip me-2"></i>
-                                    Schwann Cell Viability
+                                <h4 class="mb-3">
+                                    Schwann Cell Viability<br>Prediction System
                                 </h4>
-                                <p class="mb-0 opacity-75">Prediction System</p>
                             </div>
                             <div class="card-body login-card-body">
                                 <h5 class="text-center mb-4 text-muted">
@@ -133,9 +131,9 @@
                 </div>
                 
                 <!-- Image Column -->
-                <div class="col-lg-8 col-md-6 col-sm-4 px-0 d-none d-sm-block image-section" style="min-height: 100vh;">
+                <div class="col-lg-8 col-md-6 col-sm-4 px-0 d-none d-sm-block image-section full-height">
                     <img src="{{ asset('images/Login-img.jpg') }}"
-                        alt="Login image" class="w-100 vh-100 login-image" style="object-fit: cover; object-position: left;">
+                        alt="Login image" class="w-100 vh-100 login-image object-cover-left">
                 </div>
             </div>
         </div>

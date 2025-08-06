@@ -79,7 +79,7 @@
                                     </small>
                                 </div>
                                 <div class="text-end">
-                                    <i class="bi bi-check-circle-fill text-success" style="font-size: 1.5rem;"></i>
+                                    <i class="bi bi-check-circle-fill text-success icon-24"></i>
                                 </div>
                             </div>
                         </div>
@@ -263,11 +263,12 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('js/prediction-form-config.js') }}"></script>
 <script src="{{ asset('js/prediction-form.js') }}"></script>
 <script src="{{ asset('js/user-prediction.js') }}"></script>
 <script>
-// Initialize user prediction form with config
-window.initUserPredictionForm({
+// Register user prediction form configuration
+window.PredictionFormConfig.register('user-predict', {
     submitUrl: '{{ route('user.predict.make') }}',
     csrfToken: '{{ csrf_token() }}',
     userType: 'user'

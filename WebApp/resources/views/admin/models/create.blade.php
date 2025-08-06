@@ -101,6 +101,5 @@
 
 @section('scripts')
 <script src="{{ asset('js/admin-panel.js') }}"></script>
-@push('scripts')
 <script src="{{ asset('js/admin-model-create.js') }}"></script>
 @endsection
