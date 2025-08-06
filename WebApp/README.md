@@ -238,6 +238,38 @@ php artisan test --testsuite=Feature
 php artisan test --coverage
 ```
 
+### Test Accounts
+
+After running the database seeder (`php artisan db:seed`), you can use these accounts to test the web application:
+
+**Administrator Account:**
+- **Username:** `admin`
+- **Password:** `Admin@123`
+- **Role:** Administrator (Full system access)
+
+**Regular User Accounts:**
+- **Username:** `testuser`
+- **Password:** `Test@123`
+- **Role:** User
+
+- **Username:** `johnsmith`
+- **Password:** `User@123`
+- **Role:** User
+
+- **Username:** `janewilson`
+- **Password:** `User@123`
+- **Role:** User
+
+- **Username:** `mikebrown`
+- **Password:** `User@123`
+- **Role:** User
+
+- **Username:** `sarahdavis`
+- **Password:** `User@123`
+- **Role:** User
+
+> **Note:** Use the administrator account to access admin panel features and user management. Regular user accounts can be used to test user-specific functionality like creating predictions and viewing personal dashboard.
+
 ### Test Structure
 - **Feature Tests**: End-to-end functionality testing
 - **Unit Tests**: Individual component testing
