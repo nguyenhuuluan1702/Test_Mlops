@@ -401,7 +401,7 @@ select.form-control {
 
 .model-badge.keras { background-color: #ff9800; color: white; }
 .model-badge.pytorch { background-color: #ee4c2c; color: white; }
-.model-badge.sklearn { background-color: #f7931e; color: white; }
+.model-badge.sklearn { background-color: #dba400; color: white; }
 .model-badge.xgboost { background-color: #189ad3; color: white; }
 .model-badge.pickle { background-color: #28a745; color: white; }
 .model-badge.joblib { background-color: #6c757d; color: white; }
@@ -418,7 +418,7 @@ select.form-control {
     font-weight: 600;
 }
 .model-badge.pytorch { background-color: #ee4c2c; color: white; }
-.model-badge.sklearn { background-color: #f7931e; color: white; }
+.model-badge.sklearn { background-color: #dba400; color: white; }
 .model-badge.xgboost { background-color: #189ad3; color: white; }
 .model-badge.pickle { background-color: #28a745; color: white; }
 .model-badge.joblib { background-color: #6c757d; color: white; }

@@ -5,7 +5,7 @@ $(document).ready(function() {
         lengthChange: true,
         lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
         pageLength: 25,
-        order: [[0, 'asc']], // Sort by model name ascending
+        order: [], // No initial sorting - display in database order, but columns remain sortable
         buttons: [
             {
                 extend: 'copy',
@@ -69,6 +69,13 @@ $(document).ready(function() {
             { responsivePriority: 2, targets: 1 }, // Library Type
             { responsivePriority: 3, targets: 3 }, // Status
             { responsivePriority: 4, targets: 5 }, // Actions (back to column 5)
+            { className: "text-center", targets: [1, 3, 4] }, // Center align for badges/status columns
+            // { width: "20%", targets: 0 }, // Model Name width
+            // { width: "15%", targets: 1 }, // Library Type width
+            // { width: "25%", targets: 2 }, // File Path width
+            // { width: "10%", targets: 3 }, // Status width
+            // { width: "10%", targets: 4 }, // Predictions width
+            // { width: "20%", targets: 5 }  // Actions width
         ],
         language: {
             search: "Search models:",

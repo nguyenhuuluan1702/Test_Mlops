@@ -134,10 +134,10 @@ def predict_with_dynamic_model():
         model_type = data['model_type'].lower()
         
         # Validate parameter ranges
-        if not (0 <= pc_mxene_loading <= 0.03):
-            return jsonify({'error': 'pc_mxene_loading must be between 0 and 0.03'}), 400
-        if not (0 <= laminin_peptide_loading <= 5.9):
-            return jsonify({'error': 'laminin_peptide_loading must be between 0 and 5.9'}), 400
+        if not (0 <= pc_mxene_loading <= 0.3):
+            return jsonify({'error': 'pc_mxene_loading must be between 0 and 0.3'}), 400
+        if not (0 <= laminin_peptide_loading <= 150):
+            return jsonify({'error': 'laminin_peptide_loading must be between 0 and 150'}), 400
         if not (0 <= stimulation_frequency <= 3):
             return jsonify({'error': 'stimulation_frequency must be between 0 and 3'}), 400
         if not (0 <= applied_voltage <= 3):

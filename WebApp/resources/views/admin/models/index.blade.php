@@ -49,7 +49,7 @@
                                     {{ $model->MLMName }}
                                     @php
                                         $isDefault = $model->MLMName === 'Default ANN Model' || 
-                                                   str_contains($model->FilePath, 'ann_model.keras') || 
+                                                   str_contains($model->FilePath, 'default_ann_model.keras') || 
                                                    $model->id === 1;
                                     @endphp
                                     @if($isDefault)
@@ -88,7 +88,7 @@
                                         @php
                                             $predictionCount = $model->predictions()->count();
                                             $isDefault = $model->MLMName === 'Default ANN Model' || 
-                                                       str_contains($model->FilePath, 'ann_model.keras') || 
+                                                       str_contains($model->FilePath, 'default_ann_model.keras') || 
                                                        $model->id === 1;
                                         @endphp
                                         

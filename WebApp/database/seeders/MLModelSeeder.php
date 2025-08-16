@@ -17,32 +17,40 @@ class MLModelSeeder extends Seeder
         if (MLModel::count() == 0) {
             MLModel::create([
                 'MLMName' => 'Default ANN Model',
-                'FilePath' => 'models/ann_model.keras',
+                'FilePath' => 'models/default_ann_model.keras',
                 'LibType' => 'keras',
+                'IsActive' => true,
+            ]);
+
+            MLModel::create([
+                'MLMName' => 'Customize ANN Model',
+                'FilePath' => 'models/custom_ann_model.keras',
+                'LibType' => 'keras',
+                'IsActive' => true,
+            ]);
+
+            MLModel::create([
+                'MLMName' => 'Preview Linear Regression Model',
+                'FilePath' => 'models/lr_augmented_model.pkl',
+                'LibType' => 'sklearn',
+                'IsActive' => true,
+            ]);
+            
+            MLModel::create([
+                'MLMName' => 'Preview Random Forest Model',
+                'FilePath' => 'models/rf_augmented_model.pkl',
+                'LibType' => 'sklearn',
+                'IsActive' => true,
+            ]);
+
+            MLModel::create([
+                'MLMName' => 'Preview XGBoost Model',
+                'FilePath' => 'models/xgb_augmented_model.json',
+                'LibType' => 'xgboost',
                 'IsActive' => true,
             ]);
         }
 
-        // You can add more models here as needed
-        // MLModel::create([
-        //     'MLMName' => 'XGBoost Model',
-        //     'FilePath' => 'models/xgb_model.json',
-        //     'LibType' => 'xgboost',
-        //     'IsActive' => true,
-        // ]);
         
-        // MLModel::create([
-        //     'MLMName' => 'PyTorch Model',
-        //     'FilePath' => 'models/pytorch_model.pt',
-        //     'LibType' => 'pytorch',
-        //     'IsActive' => true,
-        // ]);
-        
-        // MLModel::create([
-        //     'MLMName' => 'Sklearn Model',
-        //     'FilePath' => 'models/sklearn_model.pkl',
-        //     'LibType' => 'sklearn',
-        //     'IsActive' => true,
-        // ]);
     }
 }

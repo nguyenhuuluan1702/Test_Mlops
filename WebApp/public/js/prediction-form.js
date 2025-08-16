@@ -72,8 +72,8 @@ class PredictionForm {
     validateData(data) {
         const validations = [
             { field: 'ml_model_id', condition: !data.ml_model_id || isNaN(data.ml_model_id), message: 'Please select an AI model' },
-            { field: 'pc_mxene_loading', condition: data.pc_mxene_loading < 0 || data.pc_mxene_loading > 0.03, message: 'pc-MXene loading must be between 0 and 0.03' },
-            { field: 'laminin_peptide_loading', condition: data.laminin_peptide_loading < 0 || data.laminin_peptide_loading > 5.9, message: 'Laminin peptide must be between 0 and 5.9' },
+            { field: 'pc_mxene_loading', condition: data.pc_mxene_loading < 0 || data.pc_mxene_loading > 0.3, message: 'pc-MXene loading must be between 0 and 0.3' },
+            { field: 'laminin_peptide_loading', condition: data.laminin_peptide_loading < 0 || data.laminin_peptide_loading > 150, message: 'Laminin peptide must be between 0 and 150' },
             { field: 'stimulation_frequency', condition: data.stimulation_frequency < 0 || data.stimulation_frequency > 3, message: 'Stimulation frequency must be between 0 and 3' },
             { field: 'applied_voltage', condition: data.applied_voltage < 0 || data.applied_voltage > 3, message: 'Applied voltage must be between 0 and 3' }
         ];

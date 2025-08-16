@@ -101,7 +101,7 @@
                             pc-MXene loading
                         </label>
                         <input type="number" step="0.001" class="form-control" id="pc_mxene_loading" 
-                               name="pc_mxene_loading" min="0" max="0.03" placeholder="Enter pc-MXene loading (0 to 0.03)" required>
+                               name="pc_mxene_loading" min="0" max="0.3" placeholder="Enter pc-MXene loading (0 to 0.3)" required>
                         <small class="form-text text-muted">Concentration in mg/mL</small>
                     </div>
 
@@ -112,7 +112,7 @@
                             Laminin peptide loading
                         </label>
                         <input type="number" step="0.1" class="form-control" id="laminin_peptide_loading" 
-                               name="laminin_peptide_loading" min="0" max="5.9" placeholder="Enter Laminin peptide loading (0 to 5.9)" required>
+                               name="laminin_peptide_loading" min="0" max="150" placeholder="Enter Laminin peptide loading (0 to 150)" required>
                         <small class="form-text text-muted">Concentration in μg/mL</small>
                     </div>
 
@@ -202,7 +202,7 @@
                         pc-MXene loading
                     </h6>
                     <p class="mb-0 small">
-                        <strong>Range:</strong> 0 to 0.03 mg/mL<br>
+                        <strong>Range:</strong> 0 to 0.3 mg/mL<br>
                         <strong>Description:</strong> Concentration of pc-MXene nanosheets
                     </p>
                 </div>
@@ -213,7 +213,7 @@
                         Laminin peptide loading
                     </h6>
                     <p class="mb-0 small">
-                        <strong>Range:</strong> 0 to 5.9 μg/mL<br>
+                        <strong>Range:</strong> 0 to 150 μg/mL<br>
                         <strong>Description:</strong> Concentration of laminin peptide
                     </p>
                 </div>

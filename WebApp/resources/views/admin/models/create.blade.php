@@ -69,12 +69,13 @@
                         <input type="file" class="form-control-file @error('model_file') is-invalid @enderror" 
                                id="model_file" name="model_file" accept=".h5,.pkl,.keras,.json,.pt,.pth,.joblib,.xgb" required>
                         <small class="form-text text-muted">
-                            Supported formats: 
+                            <strong>Supported formats:</strong> 
                             <br><strong>Keras:</strong> .keras, .h5, .hdf5
                             <br><strong>PyTorch:</strong> .pt, .pth
                             <br><strong>Sklearn:</strong> .pkl, .joblib
                             <br><strong>XGBoost:</strong> .json, .model, .xgb
-                            <br><strong>Max size:</strong> 100MB
+                            <br><strong>Max size:</strong> <?php echo ini_get('upload_max_filesize'); ?> (PHP limit) / 100MB (Laravel limit)
+                            <br><small class="text-warning">⚠️ If upload fails, check that your file is under <?php echo ini_get('upload_max_filesize'); ?> (current PHP limit)</small>
                         </small>
                         @error('model_file')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -97,6 +98,9 @@
                 </div>
             </form>
         </div>
+        
+        @include('admin.models.php-upload-help')
+    </div>
 @endsection
 
 @section('scripts')

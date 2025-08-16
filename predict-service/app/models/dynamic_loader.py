@@ -39,9 +39,9 @@ class ModelLoader:
             elif model_type == 'xgboost':
                 return ModelLoader._load_xgboost_model(model_path)
             elif model_type == 'pickle':
-                return ModelLoader._load_pickle_model(model_path)
+                return ModelLoader._load_sklearn_model(model_path)
             elif model_type == 'joblib':
-                return ModelLoader._load_joblib_model(model_path)
+                return ModelLoader._load_sklearn_model(model_path)
             else:
                 raise ValueError(f"Unsupported model type: {model_type}")
                 
@@ -250,14 +250,15 @@ class ModelPredictor:
         # that needs to be converted to percentage (0-100)
         
         # Models that typically output 0-1 probability
-        if model_type in ['keras', 'pytorch', 'sklearn', 'xgboost']:
-            # Check if result is already in percentage range (>1)
-            if raw_result > 1:
-                # Already in percentage format
-                return round(raw_result, 2)
-            else:
-                # Convert from probability to percentage
-                return round(raw_result * 100, 2)
+        if model_type in ['keras', 'pytorch', 'sklearn', 'xgboost','pickle', 'joblib']:
+            # # Check if result is already in percentage range (>1)
+            # if raw_result > 1:
+            #     # Already in percentage format
+            #     return round(raw_result, 2)
+            # else:
+            #     # Convert from probability to percentage
+            #     return round(raw_result * 100, 2)
+            return round(raw_result * 100, 2)
         else:
             # Unknown models, assume percentage format
             return round(raw_result, 2)

@@ -1,5 +1,5 @@
 import os
-import pickle
+import joblib
 from app.config.env import Config_env
 
 # Scaler file path (keeping original filename for compatibility)
@@ -16,5 +16,5 @@ def get_scaler():
     global _shared_scaler
     if _shared_scaler is None:
         with open(SCALER_PATH, 'rb') as f:
-            _shared_scaler = pickle.load(f)
+            _shared_scaler = joblib.load(f)
     return _shared_scaler

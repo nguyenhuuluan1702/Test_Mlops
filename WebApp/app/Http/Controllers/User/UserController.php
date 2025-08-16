@@ -55,8 +55,8 @@ class UserController extends Controller
     public function makePrediction(Request $request)
     {
         $request->validate([
-            'pc_mxene_loading' => 'required|numeric|min:0|max:0.03',
-            'laminin_peptide_loading' => 'required|numeric|min:0|max:5.9',
+            'pc_mxene_loading' => 'required|numeric|min:0|max:0.3',
+            'laminin_peptide_loading' => 'required|numeric|min:0|max:150',
             'stimulation_frequency' => 'required|numeric|min:0|max:3',
             'applied_voltage' => 'required|numeric|min:0|max:3',
             'ml_model_id' => 'required|exists:ml_models,id',

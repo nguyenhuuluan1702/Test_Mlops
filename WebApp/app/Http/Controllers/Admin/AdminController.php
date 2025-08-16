@@ -204,6 +204,27 @@ class AdminController extends Controller
 
     public function storeModel(Request $request)
     {
+        // Check for PHP upload errors first
+        if (!$request->hasFile('model_file')) {
+            // Check if this is due to file size limit
+            $uploadError = $_FILES['model_file']['error'] ?? UPLOAD_ERR_NO_FILE;
+            
+            if ($uploadError === UPLOAD_ERR_INI_SIZE) {
+                $maxFileSize = ini_get('upload_max_filesize');
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['model_file' => "The model file is too large. Maximum allowed size is {$maxFileSize}. Please increase upload_max_filesize in PHP configuration."]);
+            } elseif ($uploadError === UPLOAD_ERR_FORM_SIZE) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['model_file' => 'The model file exceeds the form size limit.']);
+            } elseif ($uploadError === UPLOAD_ERR_PARTIAL) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['model_file' => 'The model file was only partially uploaded. Please try again.']);
+            }
+        }
+
         // Debug information
         \Log::info('File upload attempt:', [
             'has_file' => $request->hasFile('model_file'),
@@ -213,7 +234,8 @@ class AdminController extends Controller
                 'mime' => $request->file('model_file')->getMimeType(),
                 'size' => $request->file('model_file')->getSize(),
             ] : null,
-            'libtype' => $request->LibType
+            'libtype' => $request->LibType,
+            'upload_error' => $_FILES['model_file']['error'] ?? 'no error info'
         ]);
 
         $request->validate([
@@ -234,6 +256,19 @@ class AdminController extends Controller
                     
                     if (!in_array($extension, $allowedExtensions)) {
                         $fail('The ' . $attribute . ' must be a file of type: ' . implode(', ', $allowedExtensions) . '. Got: ' . $extension);
+                    }
+
+                    // Check file size against PHP limits
+                    $maxUploadSize = $this->parseSize(ini_get('upload_max_filesize'));
+                    $maxPostSize = $this->parseSize(ini_get('post_max_size'));
+                    $fileSize = $value->getSize();
+                    
+                    if ($fileSize > $maxUploadSize) {
+                        $fail('The ' . $attribute . ' exceeds PHP upload_max_filesize limit (' . ini_get('upload_max_filesize') . ').');
+                    }
+                    
+                    if ($fileSize > $maxPostSize) {
+                        $fail('The ' . $attribute . ' exceeds PHP post_max_size limit (' . ini_get('post_max_size') . ').');
                     }
                 }
             ],
@@ -261,6 +296,20 @@ class AdminController extends Controller
         return redirect()->route('admin.models')->with('success', 'Model uploaded successfully.');
     }
 
+    /**
+     * Parse size string (like "2M", "128K") to bytes
+     */
+    private function parseSize($size) {
+        $unit = preg_replace('/[^bkmgtpezy]/i', '', $size);
+        $size = preg_replace('/[^0-9\.]/', '', $size);
+        
+        if ($unit) {
+            return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
+        }
+        
+        return round($size);
+    }
+
     public function editModel(MLModel $model)
     {
         return view('admin.models.edit', compact('model'));
@@ -268,6 +317,26 @@ class AdminController extends Controller
 
     public function updateModel(Request $request, MLModel $model)
     {
+        // Check for PHP upload errors if file is being uploaded
+        if ($request->hasFile('model_file') || (isset($_FILES['model_file']) && $_FILES['model_file']['error'] !== UPLOAD_ERR_NO_FILE)) {
+            $uploadError = $_FILES['model_file']['error'] ?? UPLOAD_ERR_NO_FILE;
+            
+            if ($uploadError === UPLOAD_ERR_INI_SIZE) {
+                $maxFileSize = ini_get('upload_max_filesize');
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['model_file' => "The model file is too large. Maximum allowed size is {$maxFileSize}. Please increase upload_max_filesize in PHP configuration."]);
+            } elseif ($uploadError === UPLOAD_ERR_FORM_SIZE) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['model_file' => 'The model file exceeds the form size limit.']);
+            } elseif ($uploadError === UPLOAD_ERR_PARTIAL) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['model_file' => 'The model file was only partially uploaded. Please try again.']);
+            }
+        }
+
         $request->validate([
             'MLMName' => 'required|string|max:255',
             'model_file' => [
@@ -281,6 +350,19 @@ class AdminController extends Controller
                         
                         if (!in_array($extension, $allowedExtensions)) {
                             $fail('The ' . $attribute . ' must be a file of type: ' . implode(', ', $allowedExtensions) . '.');
+                        }
+
+                        // Check file size against PHP limits
+                        $maxUploadSize = $this->parseSize(ini_get('upload_max_filesize'));
+                        $maxPostSize = $this->parseSize(ini_get('post_max_size'));
+                        $fileSize = $value->getSize();
+                        
+                        if ($fileSize > $maxUploadSize) {
+                            $fail('The ' . $attribute . ' exceeds PHP upload_max_filesize limit (' . ini_get('upload_max_filesize') . ').');
+                        }
+                        
+                        if ($fileSize > $maxPostSize) {
+                            $fail('The ' . $attribute . ' exceeds PHP post_max_size limit (' . ini_get('post_max_size') . ').');
                         }
                     }
                 }
@@ -396,8 +478,8 @@ class AdminController extends Controller
     {
         // Test the model with sample data
         $request->validate([
-            'pc_mxene_loading' => 'required|numeric|min:0|max:0.03',
-            'laminin_peptide_loading' => 'required|numeric|min:0|max:5.9',
+            'pc_mxene_loading' => 'required|numeric|min:0|max:0.3',
+            'laminin_peptide_loading' => 'required|numeric|min:0|max:150',
             'stimulation_frequency' => 'required|numeric|min:0|max:3',
             'applied_voltage' => 'required|numeric|min:0|max:3',
         ]);
@@ -516,8 +598,8 @@ class AdminController extends Controller
     public function makePrediction(Request $request)
     {
         $request->validate([
-            'pc_mxene_loading' => 'required|numeric|min:0|max:0.03',
-            'laminin_peptide_loading' => 'required|numeric|min:0|max:5.9',
+            'pc_mxene_loading' => 'required|numeric|min:0|max:0.3',
+            'laminin_peptide_loading' => 'required|numeric|min:0|max:150',
             'stimulation_frequency' => 'required|numeric|min:0|max:3',
             'applied_voltage' => 'required|numeric|min:0|max:3',
             'ml_model_id' => 'required|exists:ml_models,id',
