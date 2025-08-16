@@ -24,21 +24,35 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'UserCode' => 'USR' . str_pad(fake()->unique()->numberBetween(1000000, 9999999), 7, '0', STR_PAD_LEFT),
+            'FullName' => fake()->name(),
+            'Gender' => fake()->randomElement(['Male', 'Female']),
+            'BirthDate' => fake()->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d'),
+            'Address' => fake()->address(),
+            'Username' => fake()->unique()->userName(),
+            'Password' => static::$password ??= Hash::make('password'),
+            'role_id' => 2, // Default to user role
             'remember_token' => Str::random(10),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Create an admin user.
      */
-    public function unverified(): static
+    public function admin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'role_id' => 1,
+        ]);
+    }
+
+    /**
+     * Create a user with specific role.
+     */
+    public function role(int $roleId): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role_id' => $roleId,
         ]);
     }
 }

@@ -39,13 +39,13 @@ except ImportError:
                     'pc_mxene_loading': {
                         'type': 'number',
                         'minimum': 0,
-                        'maximum': 0.03,
+                        'maximum': 0.3,
                         'description': 'PC MXene loading value'
                     },
                     'laminin_peptide_loading': {
                         'type': 'number', 
                         'minimum': 0,
-                        'maximum': 5.9,
+                        'maximum': 150,
                         'description': 'Laminin peptide loading value'
                     },
                     'stimulation_frequency': {
