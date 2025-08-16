@@ -123,7 +123,6 @@ PredictingSchwannCellViability-Laravel-MVC/
 │   ├── ml_model/                    # Trained models & scalers
 │   └── README.md                    # Flask API setup guide
 │
-├── AdminLTE-3.2.0/                  # UI Theme (reference)
 └── README.md                        # This file
 ```
 
