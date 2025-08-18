@@ -24,12 +24,71 @@ This project consists of two main components working together:
 ## 🚀 Quick Start
 
 ### Prerequisites
+
+#### Option 1: Docker (Recommended)
+- **Docker** & **Docker Compose**
+- No additional dependencies needed
+
+#### Option 2: Manual Installation
 - **PHP 8.4+** with extensions
 - **Python 3.11+** 
 - **Node.js & npm**
 - **Database** (MySQL/PostgreSQL/SQLite)
 
-### Installation Commands
+## 🐳 Docker Deployment (Recommended)
+
+### Quick Docker Setup
+```bash
+# Clone and navigate to project
+git clone <repository-url>
+cd PredictingSchwannCellViability-Laravel-MVC
+
+# Build and start all services
+docker compose up -d --build
+
+# Wait for services to be ready (about 30-60 seconds)
+# Then run initial database setup
+docker compose exec laravel-webapp php artisan migrate --force
+docker compose exec laravel-webapp php artisan db:seed --force
+```
+
+### Docker Architecture
+The system uses Docker Compose to orchestrate multiple services:
+
+- **🌐 Laravel WebApp** (Port 8080): Main web application
+- **🤖 Python API** (Port 5000): ML prediction service  
+- **🗄️ MySQL Database** (Port 3306): Data storage
+- **⚡ Redis** (Port 6379): Caching and sessions
+- **🌐 Nginx** (Port 80): Reverse proxy and load balancer
+
+### Docker Services Management
+```bash
+# Start services
+docker compose up -d
+
+# Stop services
+docker compose down
+
+# View logs
+docker compose logs -f [service-name]
+
+# Access containers
+docker compose exec laravel-webapp bash
+docker compose exec python-api bash
+docker compose exec mysql mysql -u root -p
+
+# Rebuild specific service
+docker compose up -d --build [service-name]
+```
+
+### Environment Configuration
+Docker automatically handles environment setup, but you can customize:
+
+1. **Laravel Environment**: Check `WebApp/.env.docker`
+2. **Database Configuration**: Defined in `docker-compose.yml`
+3. **Python API Settings**: Configured in `predict-service/app/config/`
+
+### Manual Installation Commands
 
 **1. Install PHP (choose your platform):**
 ```bash
@@ -104,7 +163,13 @@ python run.py        # Runs on http://localhost:5000
 
 ```
 PredictingSchwannCellViability-Laravel-MVC/
+├── docker-compose.yml               # Docker orchestration configuration
+├── docker/
+│   └── nginx/
+│       └── default.conf             # Nginx reverse proxy config
+│
 ├── WebApp/                          # Laravel MVC Application
+│   ├── dockerfile                   # Laravel container configuration
 │   ├── app/
 │   │   ├── Http/Controllers/        # Request controllers
 │   │   ├── Models/                  # Eloquent models
@@ -115,6 +180,7 @@ PredictingSchwannCellViability-Laravel-MVC/
 │   └── README.md                    # Laravel setup guide
 │
 ├── predict-service/                 # Python Flask API
+│   ├── dockerfile                   # Python API container configuration
 │   ├── app/
 │   │   ├── routes/                  # API endpoints
 │   │   ├── models/                  # ML model utilities
@@ -197,6 +263,28 @@ The Laravel webapp communicates with the Python service via HTTP APIs:
 ## 🚨 Troubleshooting
 
 ### Common Issues
+
+**Docker Issues:**
+```bash
+# Services not starting
+docker compose down && docker compose up -d --build
+
+# Database connection issues
+docker compose exec laravel-webapp php artisan migrate:status
+docker compose exec mysql mysql -u root -p
+
+# Container logs
+docker compose logs laravel-webapp
+docker compose logs python-api
+docker compose logs mysql
+
+# Clean rebuild (removes all data)
+docker compose down -v
+docker compose up -d --build
+
+# Permission issues in containers
+docker compose exec laravel-webapp chown -R www-data:www-data storage/ bootstrap/cache/
+```
 
 **WebApp Issues:**
 ```bash
