@@ -11,7 +11,7 @@ class MLModel extends Model
 
     protected $table = 'ml_models';
 
-    protected $fillable = ['MLMName', 'FilePath', 'LibType', 'IsActive'];
+    protected $fillable = ['MLMName', 'FilePath', 'LibType', 'IsActive', 'MSEValue', 'MAEValue'];
 
     protected $casts = [
         'IsActive' => 'boolean',
