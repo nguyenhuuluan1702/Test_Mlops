@@ -20,6 +20,8 @@ class MLModelSeeder extends Seeder
                 'FilePath' => 'models/default_ann_model.keras',
                 'LibType' => 'keras',
                 'IsActive' => true,
+                'MSEValue' => 0.0281,
+                'MAEValue' => 0.1144,
             ]);
 
             MLModel::create([
@@ -27,6 +29,8 @@ class MLModelSeeder extends Seeder
                 'FilePath' => 'models/custom_ann_model.keras',
                 'LibType' => 'keras',
                 'IsActive' => true,
+                'MSEValue' => 0.02,
+                'MAEValue' => 0.0896,
             ]);
 
             MLModel::create([
@@ -34,6 +38,8 @@ class MLModelSeeder extends Seeder
                 'FilePath' => 'models/lr_augmented_model.pkl',
                 'LibType' => 'sklearn',
                 'IsActive' => true,
+                'MSEValue' => 0.0265,
+                'MAEValue' => 0.131,
             ]);
             
             MLModel::create([
@@ -41,6 +47,8 @@ class MLModelSeeder extends Seeder
                 'FilePath' => 'models/rf_augmented_model.pkl',
                 'LibType' => 'sklearn',
                 'IsActive' => true,
+                'MSEValue' => 0.0093,
+                'MAEValue' => 0.0709,
             ]);
 
             MLModel::create([
@@ -48,6 +56,8 @@ class MLModelSeeder extends Seeder
                 'FilePath' => 'models/xgb_augmented_model.json',
                 'LibType' => 'xgboost',
                 'IsActive' => true,
+                'MSEValue' => 0.0095,
+                'MAEValue' => 0.0725,
             ]);
         }
 

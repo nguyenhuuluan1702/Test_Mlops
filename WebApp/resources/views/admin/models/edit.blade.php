@@ -53,6 +53,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="MSEValue">MSE Value</label>
+                                <input type="number" step="0.0001" class="form-control @error('MSEValue') is-invalid @enderror" 
+                                       id="MSEValue" name="MSEValue" value="{{ old('MSEValue', $model->MSEValue) }}">
+                                @error('MSEValue')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="MAEValue">MAE Value</label>
+                                <input type="number" step="0.0001" class="form-control @error('MAEValue') is-invalid @enderror" 
+                                       id="MAEValue" name="MAEValue" value="{{ old('MAEValue', $model->MAEValue) }}">
+                                @error('MAEValue')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="form-group">
                         <label>Current File</label>

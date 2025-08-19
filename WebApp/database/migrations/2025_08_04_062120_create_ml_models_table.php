@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('FilePath', 255);
             $table->string('LibType', 50);
             $table->boolean('IsActive')->default(true);
+            $table->float('MSEValue');
+            $table->float('MAEValue');
             $table->timestamps();
         });
     }

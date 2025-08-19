@@ -36,7 +36,8 @@
                             <tr>
                                 <th>Model Name</th>
                                 <th>Library Type</th>
-                                <th>File Path</th>
+                                <th>MSE</th>
+                                <th>MAE</th>
                                 <th>Status</th>
                                 <th>Predictions</th>
                                 <th>Actions</th>
@@ -62,7 +63,18 @@
                                     <span class="badge badge-info">{{ $model->LibType }}</span>
                                 </td>
                                 <td>
-                                    <code>{{ $model->FilePath }}</code>
+                                    @if($model->MSEValue !== null)
+                                        {{ number_format($model->MSEValue, 4) }}
+                                    @else
+                                        <span class="text-muted">N/A</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($model->MAEValue !== null)
+                                        {{ number_format($model->MAEValue, 4) }}
+                                    @else
+                                        <span class="text-muted">N/A</span>
+                                    @endif
                                 </td>
                                 <td>
                                     @if($model->IsActive)

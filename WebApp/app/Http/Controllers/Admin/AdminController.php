@@ -240,6 +240,8 @@ class AdminController extends Controller
 
         $request->validate([
             'MLMName' => 'required|string|max:255',
+            'MSEValue' => 'required|numeric|min:0',
+            'MAEValue' => 'required|numeric|min:0',
             'model_file' => [
                 'required',
                 'file',
@@ -291,6 +293,8 @@ class AdminController extends Controller
             'FilePath' => 'models/' . $filename, // Store relative path from public directory
             'LibType' => $request->LibType,
             'IsActive' => $request->has('IsActive'),
+            'MSEValue' => $request->MSEValue ?? 0.0, // Default to 0 if not provided
+            'MAEValue' => $request->MAEValue ?? 0.0, // Default to 0 if not provided
         ]);
 
         return redirect()->route('admin.models')->with('success', 'Model uploaded successfully.');
@@ -339,6 +343,8 @@ class AdminController extends Controller
 
         $request->validate([
             'MLMName' => 'required|string|max:255',
+            'MSEValue' => 'required|numeric|min:0',
+            'MAEValue' => 'required|numeric|min:0',
             'model_file' => [
                 'nullable',
                 'file',
@@ -374,6 +380,8 @@ class AdminController extends Controller
             'MLMName' => $request->MLMName,
             'LibType' => $request->LibType,
             'IsActive' => $request->has('IsActive'),
+            'MSEValue' => $request->MSEValue ?? 0.0, // Default to 0 if not provided
+            'MAEValue' => $request->MAEValue ?? 0.0, // Default to 0 if not provided
         ];
 
         if ($request->hasFile('model_file')) {

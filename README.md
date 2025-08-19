@@ -46,6 +46,8 @@ cd PredictingSchwannCellViability-Laravel-MVC
 # Build and start all services
 docker compose up -d --build
 
+# Generate API key for Web App
+docker-compose exec laravel-webapp php artisan key:generate --force
 # Wait for services to be ready (about 30-60 seconds)
 # Then run initial database setup
 docker compose exec laravel-webapp php artisan migrate --force
