@@ -119,13 +119,13 @@ class AdminController extends Controller
     public function resetPassword(User $user)
     {
         try {
-            $success = $this->userService->resetPassword($user);
+            $success = $this->userService->resetPassword($user, 'TempPass@123');
             
             if (!$success) {
                 return redirect()->route('admin.users')->with('error', 'Cannot reset admin password.');
             }
 
-            return redirect()->route('admin.users')->with('success', 'Password has been reset to a new random password.');
+            return redirect()->route('admin.users')->with('success', 'Password has been reset to \'TempPass@123\'.');
         } catch (\Exception $e) {
             return redirect()->route('admin.users')->with('error', 'Failed to reset password: ' . $e->getMessage());
         }
