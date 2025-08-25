@@ -23,10 +23,13 @@ This project consists of two main components working together:
 
 ## 🚀 Quick Start
 
+
 ### Prerequisites
 
+> **Note:** This project requires Docker version 28.1+ and Docker Compose 2.0+ for stable operation. If you need support for older Docker/Docker Compose versions, please contact the project owner for guidance or a compatible setup.
+
 #### Option 1: Docker (Recommended)
-- **Docker** & **Docker Compose**
+- **Docker 28.1+** & **Docker Compose 2.0+**
 - No additional dependencies needed
 
 #### Option 2: Manual Installation
@@ -40,18 +43,24 @@ This project consists of two main components working together:
 ### Quick Docker Setup
 ```bash
 # Clone and navigate to project
-git clone <repository-url>
+git clone https://github.com/kietphung-bit/PredictingSchwannCellViability-Laravel-MVC.git
 cd PredictingSchwannCellViability-Laravel-MVC
 
+#Copy environment file
+#Windows
+Copy-Item .env.docker.example .env.docker
+#Linux/Mac
+cp .env.docker.example .env.docker
+
 # Build and start all services
-docker compose up -d --build
+docker-compose up -d --build
 
 # Generate API key for Web App
 docker-compose exec laravel-webapp php artisan key:generate --force
 # Wait for services to be ready (about 30-60 seconds)
 # Then run initial database setup
-docker compose exec laravel-webapp php artisan migrate --force
-docker compose exec laravel-webapp php artisan db:seed --force
+docker-compose exec laravel-webapp php artisan migrate --force
+docker-compose exec laravel-webapp php artisan db:seed --force
 ```
 
 ### Docker Architecture
@@ -60,27 +69,26 @@ The system uses Docker Compose to orchestrate multiple services:
 - **🌐 Laravel WebApp** (Port 8080): Main web application
 - **🤖 Python API** (Port 5000): ML prediction service  
 - **🗄️ MySQL Database** (Port 3306): Data storage
-- **⚡ Redis** (Port 6379): Caching and sessions
 - **🌐 Nginx** (Port 80): Reverse proxy and load balancer
 
 ### Docker Services Management
 ```bash
 # Start services
-docker compose up -d
+docker-compose up -d
 
 # Stop services
-docker compose down
+docker-compose down
 
 # View logs
-docker compose logs -f [service-name]
+docker-compose logs -f [service-name]
 
 # Access containers
-docker compose exec laravel-webapp bash
-docker compose exec python-api bash
-docker compose exec mysql mysql -u root -p
+docker-compose exec laravel-webapp bash
+docker-compose exec python-api bash
+docker-compose exec mysql mysql -u root -p
 
 # Rebuild specific service
-docker compose up -d --build [service-name]
+docker-compose up -d --build [service-name]
 ```
 
 ### Environment Configuration
@@ -107,9 +115,16 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 **2. Setup Laravel WebApp:**
 ```bash
 cd WebApp
+
 composer install
 npm install
+
+#Windows
+Copy-Item .env.example .env
+#Linux/Mac
 cp .env.example .env
+
+
 php artisan key:generate
 php artisan migrate  # Select 'yes' if database doesn't exist
 php artisan db:seed
@@ -120,6 +135,13 @@ php artisan serve    # Runs on http://localhost:8000
 **3. Setup Python Predict Service:**
 ```bash
 cd predict-service
+
+#Windows
+Copy-Item .env.example .env
+#Linux/Mac
+cp .env.example .env
+
+
 python -m venv venv
 
 # Windows
@@ -269,23 +291,23 @@ The Laravel webapp communicates with the Python service via HTTP APIs:
 **Docker Issues:**
 ```bash
 # Services not starting
-docker compose down && docker compose up -d --build
+docker-compose down && docker compose up -d --build
 
 # Database connection issues
-docker compose exec laravel-webapp php artisan migrate:status
-docker compose exec mysql mysql -u root -p
+docker-compose exec laravel-webapp php artisan migrate:status
+docker-compose exec mysql mysql -u root -p
 
 # Container logs
-docker compose logs laravel-webapp
-docker compose logs python-api
+docker-compose logs laravel-webapp
+docker-compose logs python-api
 docker compose logs mysql
 
 # Clean rebuild (removes all data)
-docker compose down -v
-docker compose up -d --build
+docker-compose down -v
+docker-compose up -d --build
 
 # Permission issues in containers
-docker compose exec laravel-webapp chown -R www-data:www-data storage/ bootstrap/cache/
+docker-compose exec laravel-webapp chown -R www-data:www-data storage/ bootstrap/cache/
 ```
 
 **WebApp Issues:**
