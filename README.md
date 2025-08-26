@@ -17,7 +17,6 @@ This project consists of two main components working together:
 ### 🤖 **Predict-Service** (Python Flask)
 - **ML Engine**: Python Flask API for neural network predictions
 - **Model Loading**: Dynamic ML model loading and inference
-- **Data Processing**: Feature scaling and preprocessing
 - **API Endpoints**: RESTful services for prediction requests
 - **Documentation**: Swagger/OpenAPI documentation
 
@@ -226,9 +225,10 @@ PredictingSchwannCellViability-Laravel-MVC/
 
 ### Administrators
 1. **Admin Dashboard** → System overview and statistics
-2. **User Management** → Create, edit, delete, reset passwords
-3. **Model Management** → Upload, activate, delete ML models
-4. **System Monitoring** → Health checks and logs
+2. **Make predictions and view history** → Get ML results and view previous predictions
+3. **User Management** → Create, edit, delete, reset passwords
+4. **Model Management** → Upload, activate, delete ML models
+5. **System Monitoring** → Health checks and logs
 
 ## 🔧 Development & Maintenance
 

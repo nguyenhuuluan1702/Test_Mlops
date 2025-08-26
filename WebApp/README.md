@@ -181,13 +181,15 @@ APP_URL=http://localhost:8000
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=schwann_cell_db
+DB_DATABASE=webapp
 DB_USERNAME=root
 DB_PASSWORD=
 
 # External Services
 PREDICT_SERVICE_URL=http://localhost:5000
-AUTH_SERVICE_URL=http://localhost:4000
+
+#JWT Secret
+JWT_SECRET=your_jwt_secret
 
 # Mail Configuration (optional)
 MAIL_MAILER=smtp
@@ -334,7 +336,6 @@ After running the database seeder (`php artisan db:seed`), you can use these acc
 The Laravel application integrates with external services:
 
 - **Predict Service** (`http://localhost:5000`): ML prediction processing
-- **Auth Service** (`http://localhost:4000`): JWT token management
 
 ### Service Communication
 - RESTful API calls using Guzzle HTTP client

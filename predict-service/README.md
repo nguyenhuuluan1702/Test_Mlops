@@ -97,10 +97,10 @@ Content-Type: application/json
 **Request:**
 ```json
 {
-  "pc_mxene_loading": 1.5,
-  "laminin_peptide_loading": 2.3,
-  "stimulation_frequency": 0.8,
-  "applied_voltage": 4.1,
+  "pc_mxene_loading": 0.01,
+  "laminin_peptide_loading": 120,
+  "stimulation_frequency": 1,
+  "applied_voltage": 1,
   "model_path": "/path/to/model.keras"
 }
 ```
