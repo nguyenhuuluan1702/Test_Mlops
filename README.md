@@ -65,10 +65,12 @@ docker-compose exec laravel-webapp php artisan db:seed --force
 ### Docker Architecture
 The system uses Docker Compose to orchestrate multiple services:
 
-- **🌐 Laravel WebApp** (Port 8080): Main web application
-- **🤖 Python API** (Port 5000): ML prediction service  
-- **🗄️ MySQL Database** (Port 3306): Data storage
-- **🌐 Nginx** (Port 80): Reverse proxy and load balancer
+- **🌐 Laravel WebApp** (Expose 9000): Main web application
+- **🤖 Python API** (Expose 5000): ML prediction service  
+- **🗄️ MySQL Database** (Expose 3306): Data storage
+- **🌐 Nginx** (Port 52025:80): Reverse proxy and load balancer
+
+![Docker deployment](images/Docker-deployment.png)
 
 ### Docker Services Management
 ```bash

@@ -163,6 +163,14 @@ WebApp/
 └── vite.config.js              # Vite build configuration
 ```
 
+## ✏️ System Design
+- **Database diagram**:
+![Database Diagram](../images/Database-diagram.png)
+
+- **Workflow diagram**:
+![Workflow Diagram](../images/WebApp-Workflow.png)
+
+
 ## 🔧 Configuration
 
 ### Environment Variables
