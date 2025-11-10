@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\DatasetController;
+use App\Http\Controllers\MLTrainingController;
 use App\Http\Controllers\User\UserController;
 
 // Include test routes for debugging
@@ -29,7 +31,7 @@ Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard'
 // Admin routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    
+
     // User management
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::get('/users/create', [AdminController::class, 'createUser'])->name('users.create');
@@ -40,7 +42,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete');
     Route::delete('/users/{user}/force', [AdminController::class, 'forceDeleteUser'])->name('users.force-delete');
     Route::post('/users/{user}/anonymize', [AdminController::class, 'anonymizeUser'])->name('users.anonymize');
-    
+
     // Model management
     Route::get('/models', [AdminController::class, 'models'])->name('models');
     Route::get('/models/create', [AdminController::class, 'createModel'])->name('models.create');
@@ -50,11 +52,25 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::delete('/models/{model}', [AdminController::class, 'deleteModel'])->name('models.delete');
     Route::delete('/models/{model}/force', [AdminController::class, 'forceDeleteModel'])->name('models.force-delete');
     Route::post('/models/{model}/test', [AdminController::class, 'testModel'])->name('models.test');
-    
+
     // Prediction features for admin
     Route::get('/predict', [AdminController::class, 'predict'])->name('predict');
     Route::post('/predict', [AdminController::class, 'makePrediction'])->name('predict.make');
     Route::get('/history', [AdminController::class, 'history'])->name('history');
+
+    // Dataset management
+
+    Route::get('/datasets', [DatasetController::class, 'index'])->name('datasets.index');
+    Route::get('/datasets/create', [DatasetController::class, 'create'])->name('datasets.create');
+    Route::post('/datasets', [DatasetController::class, 'store'])->name('datasets.store');
+    Route::get('/datasets/{id}', [DatasetController::class, 'show'])->name('datasets.show');
+    Route::delete('/datasets/{id}', [DatasetController::class, 'destroy'])->name('datasets.destroy');
+    Route::resource('datasets', DatasetController::class);
+    
+    // Training routes
+    Route::get('/datasets/{id}/train', [DatasetController::class, 'showTrainForm'])->name('datasets.train.form');
+    Route::post('/datasets/{id}/train', [DatasetController::class, 'train'])->name('datasets.train');
+
 });
 
 // User routes

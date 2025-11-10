@@ -35,7 +35,12 @@
                     'title' => 'Model Management',
                     'route' => 'admin.models',
                     'icon' => 'fas fa-brain'
-                ]    
+                ],
+                [
+                    'title' => 'Dataset Management',
+                    'route' => 'admin.datasets.index',
+                    'icon' => 'fas fa-database'
+                ],
             ]" />
         </ul>
     </nav>

@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from .routes.predict import predict_bp
+from .routes.train import train_bp
 
 def create_app():
     app = Flask(__name__)
@@ -13,7 +14,8 @@ def create_app():
     except ImportError as e:
         print(f"Warning: Could not load Swagger: {e}")
 
-    # Import and register blueprint    
+    # Import and register blueprints
     app.register_blueprint(predict_bp)
+    app.register_blueprint(train_bp)
 
     return app

@@ -47,4 +47,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Prediction::class);
     }
+
+    public function datasets()
+    {
+        return $this->hasMany(Dataset::class, 'UploadedBy', 'id');
+    }
+
+    public function trainedModels()
+    {
+        return $this->hasMany(MLModel::class, 'TrainedBy', 'id');
+    }
 }

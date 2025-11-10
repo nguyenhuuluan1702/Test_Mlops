@@ -11,47 +11,69 @@ class MLModel extends Model
 
     protected $table = 'ml_models';
 
-    protected $fillable = ['MLMName', 'FilePath', 'LibType', 'IsActive', 'MSEValue', 'MAEValue'];
+    protected $fillable = [
+        'MLMName',
+        'FilePath',
+        'LibType',
+        'IsActive',
+        'MSEValue',
+        'MAEValue',
+        'MlflowRunId',
+        'ZenmlPipelineId',
+        'TrainedBy',
+        'DatasetId',
+        'CreatedDate',
+        'UpdatedDate',
+    ];
 
     protected $casts = [
         'IsActive' => 'boolean',
+        'CreatedDate' => 'datetime',
+        'UpdatedDate' => 'datetime',
     ];
 
+    /**
+     * Relationships
+     */
     public function predictions()
     {
         return $this->hasMany(Prediction::class, 'ml_model_id');
     }
 
+    public function dataset()
+    {
+        return $this->belongsTo(Dataset::class, 'DatasetId');
+    }
+
+    public function trainedByUser()
+    {
+        return $this->belongsTo(User::class, 'TrainedBy');
+    }
+
     /**
-     * Get the absolute file path for the model
+     * Accessors & Utility Functions
      */
     public function getAbsolutePathAttribute()
     {
         return public_path($this->FilePath);
     }
 
-    /**
-     * Check if model file exists
-     */
     public function fileExists()
     {
         return file_exists($this->getAbsolutePathAttribute());
     }
 
-    /**
-     * Get file size in MB
-     */
     public function getFileSizeAttribute()
     {
         if ($this->fileExists()) {
             $sizeInBytes = filesize($this->getAbsolutePathAttribute());
-            return round($sizeInBytes / 1024 / 1024, 2); // Convert to MB
+            return round($sizeInBytes / 1024 / 1024, 2); // MB
         }
         return 0;
     }
 
     /**
-     * Scope for active models
+     * Scopes
      */
     public function scopeActive($query)
     {
@@ -59,7 +81,7 @@ class MLModel extends Model
     }
 
     /**
-     * Get default active model
+     * Static helper: get default active model
      */
     public static function getDefaultModel()
     {
